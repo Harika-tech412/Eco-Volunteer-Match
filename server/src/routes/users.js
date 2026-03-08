@@ -1,56 +1,27 @@
 const express = require("express");
-const { auth } = require("../middleware/auth");
 const User = require("../models/User");
+const { auth } = require("../middleware/auth");
 
 const router = express.Router();
 
-// Get all users
-router.get("/", async (req, res, next) => {
-  try {
-    const users = await User.find().select("-passwordHash");
-    res.json(users);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Get current user profile
 router.get("/me", auth, async (req, res, next) => {
   try {
-    const user = await User.findById(req.user.userId).select("-passwordHash");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
+    const me = await User.findById(req.user.userId).lean();
+    res.json(me);
   } catch (error) {
     next(error);
   }
 });
 
-// Get user by ID
-router.get("/:id", async (req, res, next) => {
+router.put("/me", auth, async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id).select("-passwordHash");
-    if (!user) return res.status(404).json({ message: "User not found" });
-    res.json(user);
-  } catch (error) {
-    next(error);
-  }
-});
+    const patch = {};
+    if (typeof req.body.name === "string") patch.name = req.body.name;
+    if (typeof req.body.city === "string") patch.city = req.body.city;
+    if (Array.isArray(req.body.interests)) patch.interests = req.body.interests;
 
-// Update user profile
-router.patch("/:id", auth, async (req, res, next) => {
-  try {
-    if (req.user.userId !== req.params.id) {
-      return res.status(403).json({ message: "Unauthorized" });
-    }
-    
-    const { name, city, interests } = req.body;
-    const user = await User.findByIdAndUpdate(
-      req.params.id,
-      { name, city, interests },
-      { new: true }
-    ).select("-passwordHash");
-    
-    res.json(user);
+    const me = await User.findByIdAndUpdate(req.user.userId, patch, { new: true }).lean();
+    res.json(me);
   } catch (error) {
     next(error);
   }
