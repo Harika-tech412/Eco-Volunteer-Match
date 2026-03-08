@@ -6,8 +6,10 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true, index: true },
     passwordHash: { type: String, required: true },
     city: { type: String, default: "Hyderabad" },
+
     points: { type: Number, default: 0 },
     badges: { type: [String], default: [] },
+
     joinedEventIds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
     interests: { type: [String], default: [] }
   },

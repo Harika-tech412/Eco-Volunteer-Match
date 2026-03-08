@@ -5,6 +5,9 @@ const { connectDB } = require("./db");
 
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/users");
+const eventRoutes = require("./routes/events");
+const postRoutes = require("./routes/posts");
+const rewardRoutes = require("./routes/rewards");
 
 // Validate required environment variables
 const requiredEnvVars = ["JWT_SECRET", "MONGODB_URI"];
@@ -32,6 +35,9 @@ app.get("/api/health", (req, res) => res.json({ ok: true }));
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/rewards", rewardRoutes);
 
 // Global error handler middleware
 app.use((err, req, res, next) => {
