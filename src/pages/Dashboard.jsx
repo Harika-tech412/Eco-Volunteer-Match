@@ -136,6 +136,17 @@ export default function Dashboard() {
         <StatCard tintClass="tintYellow" icon={<span>🏆</span>} value={me?.badges?.length ?? 0} label="Badges Earned" />
       </div>
 
+<div style={{
+  backgroundColor: "#e6f7e6",
+  padding: "16px",
+  borderRadius: "10px",
+  marginTop: "20px",
+  border: "1px solid #b6e3b6"
+}}>
+  <h3>🌱 Eco Tip of the Day</h3>
+  <p>Bring your own reusable bag and bottle to reduce plastic waste.</p>
+</div>
+
       <h2 className="sectionTitle">Upcoming Events Near You</h2>
 
       <div className="eventsGrid">
