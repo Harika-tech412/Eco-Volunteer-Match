@@ -4,7 +4,7 @@
 An eco-volunteering platform where users can:
 - Find nearby environmental events (cleanup, planting, recycling)
 - Join events and earn points
-- Share experiences in a community feed
+- Share experiences in a community feed and also post and like others posts
 - Redeem points for eco-friendly rewards
 - View events on an interactive map
 
